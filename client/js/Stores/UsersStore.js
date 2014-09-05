@@ -9,7 +9,6 @@ socket.on('event_new_player', function(data){
 });
 var UserStore = merge(EventEmitter.prototype, {
 	addChangeListener: function(callback){
-		console.debug('addChangeListener   -   event called', callback);
 		this.on(CHANGE_EVENT, callback);
 	},
 	removeChangeListener: function(callback){
