@@ -4,13 +4,24 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var debug = require('debug')('expressapp');
 var routes = require('./routes/index');
 var gameRouter = require('./routes/game');
 var users = require('./routes/user');
 
 var app = express();
-
+app.all('*', function(req, res, next){
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,X-Auth-Token,Content-Type,Authorization');
+    // intercept OPTIONS method
+    if ('OPTIONS' == req.method) {
+        res.send(200);
+    }
+    else {
+        next();
+    }
+});
 
 // app.use(favicon(__dirname + '/public/img/favicon.ico'));
 app.use(logger('dev'));
@@ -58,5 +69,18 @@ app.use(function(err, req, res, next) {
     });
 });
 
+var port = process.env.PORT || 3001;
+var server = app.listen(port, function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+var io = require('socket.io')(server);
 
-module.exports = app;
+io.on('connection', function(socket){
+    socket.emit('event_new_player', {id : socket.id});
+    socket.broadcast.emit('event_new_player', {id : socket.id});
+
+
+    socket.on('newAnswer', function(data){ 
+        socket.broadcast.emit('event_already_answered', {user : socket.id});
+    });
+});

@@ -1,0 +1,22 @@
+{
+  "name": "lcvip-html",
+  "version": "0.0.1",
+  "authors": [
+    "Marques Woodson <marques.woodson@gmail.com>"
+  ],
+  "description": "LastCallVIP Front End",
+  "main": "index.html",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
