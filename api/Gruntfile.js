@@ -24,7 +24,6 @@ module.exports = function (grunt) {
       },
       server: {
         files: [
-          'bin/www',
           'app.js',
           'routes/*.js'
         ],
