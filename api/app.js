@@ -7,13 +7,12 @@ var bodyParser = require('body-parser');
 var debug = require('debug')('expressapp');
 var routes = require('./routes/index');
 var gameRouter = require('./routes/game');
-var users = require('./routes/user');
 
 var app = express();
 app.all('*', function(req, res, next){
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
-    res.header('Access-Control-Allow-Headers', 'X-Requested-With,X-Auth-Token,Content-Type,Authorization');
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type,Authorization');
     // intercept OPTIONS method
     if ('OPTIONS' == req.method) {
         res.send(200);
@@ -34,7 +33,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 app.use('/game', gameRouter);
-app.use('/users', users);
 
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -5,8 +5,6 @@ var problems = require('../middleware/problems');
 
 /* GET home page. */
 router.route('/')
-
 	.get(function(req, res) {
-	  res.render('index', { title: 'Math Game' });
 	});
 module.exports = router;
